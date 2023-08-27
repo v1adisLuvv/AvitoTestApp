@@ -11,10 +11,8 @@ final class ViewController: UIViewController {
     
     // MARK: - Layout
     private struct Layout {
-        static let collectionViewTopOffset: CGFloat = 10
-        static let collectionViewLeadingOffset: CGFloat = 15
-        static let collectionViewBottomOffset: CGFloat = -10
-        static let collectionViewTrailingOffset: CGFloat = -15
+        static let collectionViewVerticalInset: CGFloat = 10
+        static let collectionViewHorizontalInset: CGFloat = 15
         
         static let collectionViewCellSpacing: CGFloat = 10
         static let collectionViewNumberOfColumns: Int = 2
@@ -24,7 +22,7 @@ final class ViewController: UIViewController {
     
     private var collectionViewCellImageSize: CGSize {
         let totalSpacing = (CGFloat(Layout.collectionViewNumberOfColumns) - 1) * Layout.collectionViewCellSpacing
-        let availableWidth = collectionView.bounds.width - Layout.collectionViewLeadingOffset - Layout.collectionViewTrailingOffset - totalSpacing
+        let availableWidth = collectionView.bounds.width - totalSpacing
         let cellWidth = availableWidth / CGFloat(Layout.collectionViewNumberOfColumns)
         return CGSize(width: cellWidth, height: cellWidth)
     }
@@ -59,10 +57,10 @@ final class ViewController: UIViewController {
     private func setupConstraints() {
         view.addSubview(collectionView)
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: Layout.collectionViewTopOffset),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: Layout.collectionViewBottomOffset),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Layout.collectionViewLeadingOffset),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: Layout.collectionViewTrailingOffset),
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: Layout.collectionViewVerticalInset),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Layout.collectionViewVerticalInset),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Layout.collectionViewHorizontalInset),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Layout.collectionViewHorizontalInset),
         ])
     }
     

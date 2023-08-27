@@ -107,7 +107,11 @@ final class CustomCollectionViewCell: UICollectionViewCell {
     }
     
     func configureCell(with ad: Advertisement) {
-
+        
+        title.text = ad.title
+        price.text = ad.price
+        location.text = ad.location
+        createdDate.text = ad.createdDate
     }
     
     private func setupConstraints() {
