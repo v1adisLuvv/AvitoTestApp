@@ -12,6 +12,8 @@
 		21FE6B5E2A9BC6C2006AF78A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B5D2A9BC6C2006AF78A /* ViewController.swift */; };
 		21FE6B632A9BC6C3006AF78A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21FE6B622A9BC6C3006AF78A /* Assets.xcassets */; };
 		21FE6B662A9BC6C3006AF78A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21FE6B642A9BC6C3006AF78A /* LaunchScreen.storyboard */; };
+		21FE6B712A9BCA63006AF78A /* Advertisements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B702A9BCA63006AF78A /* Advertisements.swift */; };
+		21FE6B732A9BD6E5006AF78A /* CustomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B722A9BD6E4006AF78A /* CustomCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		21FE6B622A9BC6C3006AF78A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		21FE6B652A9BC6C3006AF78A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		21FE6B672A9BC6C3006AF78A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		21FE6B702A9BCA63006AF78A /* Advertisements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertisements.swift; sourceTree = "<group>"; };
+		21FE6B722A9BD6E4006AF78A /* CustomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +58,24 @@
 		21FE6B582A9BC6C2006AF78A /* AvitoTestApp */ = {
 			isa = PBXGroup;
 			children = (
+				21FE6B6D2A9BC92B006AF78A /* Models */,
 				21FE6B592A9BC6C2006AF78A /* AppDelegate.swift */,
 				21FE6B5B2A9BC6C2006AF78A /* SceneDelegate.swift */,
 				21FE6B5D2A9BC6C2006AF78A /* ViewController.swift */,
+				21FE6B722A9BD6E4006AF78A /* CustomCollectionViewCell.swift */,
 				21FE6B622A9BC6C3006AF78A /* Assets.xcassets */,
 				21FE6B642A9BC6C3006AF78A /* LaunchScreen.storyboard */,
 				21FE6B672A9BC6C3006AF78A /* Info.plist */,
 			);
 			path = AvitoTestApp;
+			sourceTree = "<group>";
+		};
+		21FE6B6D2A9BC92B006AF78A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				21FE6B702A9BCA63006AF78A /* Advertisements.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,6 +149,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				21FE6B5E2A9BC6C2006AF78A /* ViewController.swift in Sources */,
+				21FE6B732A9BD6E5006AF78A /* CustomCollectionViewCell.swift in Sources */,
+				21FE6B712A9BCA63006AF78A /* Advertisements.swift in Sources */,
 				21FE6B5A2A9BC6C2006AF78A /* AppDelegate.swift in Sources */,
 				21FE6B5C2A9BC6C2006AF78A /* SceneDelegate.swift in Sources */,
 			);
