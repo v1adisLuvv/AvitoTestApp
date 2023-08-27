@@ -18,14 +18,22 @@ final class ViewController: UIViewController {
         
         static let collectionViewCellSpacing: CGFloat = 10
         static let collectionViewNumberOfColumns: Int = 2
+        static let collectionViewDescriptionHeight: CGFloat = 100
         
     }
     
-    private var collectionViewCellSize: CGSize {
+    private var collectionViewCellImageSize: CGSize {
         let totalSpacing = (CGFloat(Layout.collectionViewNumberOfColumns) - 1) * Layout.collectionViewCellSpacing
         let availableWidth = collectionView.bounds.width - Layout.collectionViewLeadingOffset - Layout.collectionViewTrailingOffset - totalSpacing
         let cellWidth = availableWidth / CGFloat(Layout.collectionViewNumberOfColumns)
         return CGSize(width: cellWidth, height: cellWidth)
+    }
+    
+    private var collectionViewCellSize: CGSize {
+        let cellWidth = collectionViewCellImageSize.width
+        let imageHeight = collectionViewCellImageSize.height
+        let cellHeight = imageHeight + Layout.collectionViewDescriptionHeight
+        return CGSize(width: cellWidth, height: cellHeight)
     }
     
     // MARK: - UI Elements
@@ -52,8 +60,8 @@ final class ViewController: UIViewController {
         view.addSubview(collectionView)
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: Layout.collectionViewTopOffset),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Layout.collectionViewLeadingOffset),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: Layout.collectionViewBottomOffset),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Layout.collectionViewLeadingOffset),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: Layout.collectionViewTrailingOffset),
         ])
     }
@@ -66,8 +74,8 @@ extension ViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        cell.contentView.backgroundColor = .green
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.identifier, for: indexPath) as! CustomCollectionViewCell
+        
         return cell
     }
 }
