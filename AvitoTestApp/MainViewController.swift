@@ -1,13 +1,18 @@
 //
-//  ViewController.swift
+//  MainViewController.swift
 //  AvitoTestApp
 //
 //  Created by Vlad Boguzh on 2023-08-27.
 //
 
 import UIKit
+import Combine
 
-final class ViewController: UIViewController {
+final class MainViewController: UIViewController {
+    
+    // MARK: - Variables
+    private var viewModel = MainViewModel()
+    private var cancellables: Set<AnyCancellable> = []
     
     // MARK: - Layout
     private struct Layout {
@@ -51,6 +56,16 @@ final class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
+        viewModel.$advertisements
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] advertisements in
+                guard let self = self else { return }
+                self.collectionView.reloadData()
+            }
+            .store(in: &cancellables)
+        
+        viewModel.fetchAdvertisements()
+        
         setupConstraints()
     }
     
@@ -66,19 +81,20 @@ final class ViewController: UIViewController {
     
 }
 
-extension ViewController: UICollectionViewDataSource {
+extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return viewModel.advertisements.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.identifier, for: indexPath) as! CustomCollectionViewCell
-        
+        let ad = viewModel.advertisements[indexPath.item]
+        cell.configure(with: ad)
         return cell
     }
 }
 
-extension ViewController: UICollectionViewDelegateFlowLayout {
+extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionViewCellSize
     }

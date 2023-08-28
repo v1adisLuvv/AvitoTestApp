@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import Combine
 
 final class CustomCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Identifier
     static let identifier = "cell"
+    private var cancellables: Set<AnyCancellable> = []
     
     // MARK: - UI Elements
     private lazy var imageView: UIImageView = {
@@ -106,12 +108,21 @@ final class CustomCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureCell(with ad: Advertisement) {
-        
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        title.text = ""
+        price.text = ""
+        location.text = ""
+        createdDate.text = ""
+        imageView.image = nil
+    }
+    
+    func configure(with ad: Advertisement) {
         title.text = ad.title
         price.text = ad.price
         location.text = ad.location
         createdDate.text = ad.createdDate
+        imageView.loadImage(from: ad.imageURL)
     }
     
     private func setupConstraints() {

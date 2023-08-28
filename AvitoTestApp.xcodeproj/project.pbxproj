@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		21FE6B5A2A9BC6C2006AF78A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B592A9BC6C2006AF78A /* AppDelegate.swift */; };
 		21FE6B5C2A9BC6C2006AF78A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B5B2A9BC6C2006AF78A /* SceneDelegate.swift */; };
-		21FE6B5E2A9BC6C2006AF78A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B5D2A9BC6C2006AF78A /* ViewController.swift */; };
+		21FE6B5E2A9BC6C2006AF78A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B5D2A9BC6C2006AF78A /* MainViewController.swift */; };
 		21FE6B632A9BC6C3006AF78A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21FE6B622A9BC6C3006AF78A /* Assets.xcassets */; };
 		21FE6B662A9BC6C3006AF78A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21FE6B642A9BC6C3006AF78A /* LaunchScreen.storyboard */; };
 		21FE6B712A9BCA63006AF78A /* Advertisements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B702A9BCA63006AF78A /* Advertisements.swift */; };
@@ -18,13 +18,16 @@
 		21FE6B7C2A9BF7DB006AF78A /* DefaultNetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B7B2A9BF7DB006AF78A /* DefaultNetworkClient.swift */; };
 		21FE6B7E2A9BF7F2006AF78A /* NetworkServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B7D2A9BF7F2006AF78A /* NetworkServiceProtocol.swift */; };
 		21FE6B802A9BF805006AF78A /* DefaultNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B7F2A9BF805006AF78A /* DefaultNetworkService.swift */; };
+		21FE6B822A9C0301006AF78A /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B812A9C0301006AF78A /* MainViewModel.swift */; };
+		21FE6B862A9CD438006AF78A /* UIImageView+loadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B852A9CD438006AF78A /* UIImageView+loadImage.swift */; };
+		21FE6B882A9CDD18006AF78A /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B872A9CDD18006AF78A /* ImageCache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		21FE6B562A9BC6C2006AF78A /* AvitoTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AvitoTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21FE6B592A9BC6C2006AF78A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21FE6B5B2A9BC6C2006AF78A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		21FE6B5D2A9BC6C2006AF78A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		21FE6B5D2A9BC6C2006AF78A /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		21FE6B622A9BC6C3006AF78A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		21FE6B652A9BC6C3006AF78A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		21FE6B672A9BC6C3006AF78A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -34,6 +37,9 @@
 		21FE6B7B2A9BF7DB006AF78A /* DefaultNetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNetworkClient.swift; sourceTree = "<group>"; };
 		21FE6B7D2A9BF7F2006AF78A /* NetworkServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceProtocol.swift; sourceTree = "<group>"; };
 		21FE6B7F2A9BF805006AF78A /* DefaultNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNetworkService.swift; sourceTree = "<group>"; };
+		21FE6B812A9C0301006AF78A /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		21FE6B852A9CD438006AF78A /* UIImageView+loadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+loadImage.swift"; sourceTree = "<group>"; };
+		21FE6B872A9CDD18006AF78A /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,11 +76,13 @@
 				21FE6B6D2A9BC92B006AF78A /* Models */,
 				21FE6B592A9BC6C2006AF78A /* AppDelegate.swift */,
 				21FE6B5B2A9BC6C2006AF78A /* SceneDelegate.swift */,
-				21FE6B5D2A9BC6C2006AF78A /* ViewController.swift */,
+				21FE6B5D2A9BC6C2006AF78A /* MainViewController.swift */,
+				21FE6B812A9C0301006AF78A /* MainViewModel.swift */,
 				21FE6B722A9BD6E4006AF78A /* CustomCollectionViewCell.swift */,
 				21FE6B622A9BC6C3006AF78A /* Assets.xcassets */,
 				21FE6B642A9BC6C3006AF78A /* LaunchScreen.storyboard */,
 				21FE6B672A9BC6C3006AF78A /* Info.plist */,
+				21FE6B872A9CDD18006AF78A /* ImageCache.swift */,
 			);
 			path = AvitoTestApp;
 			sourceTree = "<group>";
@@ -94,6 +102,7 @@
 				21FE6B7B2A9BF7DB006AF78A /* DefaultNetworkClient.swift */,
 				21FE6B7D2A9BF7F2006AF78A /* NetworkServiceProtocol.swift */,
 				21FE6B7F2A9BF805006AF78A /* DefaultNetworkService.swift */,
+				21FE6B852A9CD438006AF78A /* UIImageView+loadImage.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -168,12 +177,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				21FE6B5E2A9BC6C2006AF78A /* ViewController.swift in Sources */,
+				21FE6B5E2A9BC6C2006AF78A /* MainViewController.swift in Sources */,
 				21FE6B732A9BD6E5006AF78A /* CustomCollectionViewCell.swift in Sources */,
 				21FE6B7C2A9BF7DB006AF78A /* DefaultNetworkClient.swift in Sources */,
 				21FE6B712A9BCA63006AF78A /* Advertisements.swift in Sources */,
 				21FE6B7E2A9BF7F2006AF78A /* NetworkServiceProtocol.swift in Sources */,
+				21FE6B822A9C0301006AF78A /* MainViewModel.swift in Sources */,
+				21FE6B882A9CDD18006AF78A /* ImageCache.swift in Sources */,
 				21FE6B802A9BF805006AF78A /* DefaultNetworkService.swift in Sources */,
+				21FE6B862A9CD438006AF78A /* UIImageView+loadImage.swift in Sources */,
 				21FE6B5A2A9BC6C2006AF78A /* AppDelegate.swift in Sources */,
 				21FE6B5C2A9BC6C2006AF78A /* SceneDelegate.swift in Sources */,
 				21FE6B7A2A9BF7CF006AF78A /* NetworkClientProtocol.swift in Sources */,

@@ -8,6 +8,6 @@
 import Foundation
 
 protocol NetworkServiceProtocol {
-    func fetchAdvertisements() async throws -> [Advertisements]
+    func fetchAdvertisements() async throws -> [Advertisement]
     func fetchDetailAdveritisement(id: String) async throws -> Advertisement
 }
