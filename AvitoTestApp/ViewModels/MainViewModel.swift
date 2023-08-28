@@ -9,17 +9,23 @@ import Foundation
 import Combine
 
 final class MainViewModel: ObservableObject {
-    // MARK: - Data
+    
     @Published var advertisements: [Advertisement] = []
+    @Published var screenState: ScreenState = .downloading
+    
     private let networkService = DefaultNetworkService()
     
     func fetchAdvertisements() {
         Task {
             do {
                 print("start fetching ads")
+                screenState = .downloading
                 advertisements = try await networkService.fetchAdvertisements()
+                sleep(1)
+                screenState = .content
                 print("finish fetching ads")
             } catch {
+                screenState = .error(message: "Failed loading data")
                 print("bad ads")
             }
         }

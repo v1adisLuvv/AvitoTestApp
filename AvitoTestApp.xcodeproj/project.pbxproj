@@ -21,6 +21,7 @@
 		21FE6B822A9C0301006AF78A /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B812A9C0301006AF78A /* MainViewModel.swift */; };
 		21FE6B862A9CD438006AF78A /* UIImageView+loadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B852A9CD438006AF78A /* UIImageView+loadImage.swift */; };
 		21FE6B882A9CDD18006AF78A /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B872A9CDD18006AF78A /* ImageCache.swift */; };
+		21FE6B8D2A9CE2A8006AF78A /* ScreenState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B8C2A9CE2A8006AF78A /* ScreenState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		21FE6B812A9C0301006AF78A /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		21FE6B852A9CD438006AF78A /* UIImageView+loadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+loadImage.swift"; sourceTree = "<group>"; };
 		21FE6B872A9CDD18006AF78A /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		21FE6B8C2A9CE2A8006AF78A /* ScreenState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,17 +74,11 @@
 		21FE6B582A9BC6C2006AF78A /* AvitoTestApp */ = {
 			isa = PBXGroup;
 			children = (
+				21FE6B892A9CE201006AF78A /* SupportFiles */,
 				21FE6B782A9BF7BC006AF78A /* Networking */,
 				21FE6B6D2A9BC92B006AF78A /* Models */,
-				21FE6B592A9BC6C2006AF78A /* AppDelegate.swift */,
-				21FE6B5B2A9BC6C2006AF78A /* SceneDelegate.swift */,
-				21FE6B5D2A9BC6C2006AF78A /* MainViewController.swift */,
-				21FE6B812A9C0301006AF78A /* MainViewModel.swift */,
-				21FE6B722A9BD6E4006AF78A /* CustomCollectionViewCell.swift */,
-				21FE6B622A9BC6C3006AF78A /* Assets.xcassets */,
-				21FE6B642A9BC6C3006AF78A /* LaunchScreen.storyboard */,
-				21FE6B672A9BC6C3006AF78A /* Info.plist */,
-				21FE6B872A9CDD18006AF78A /* ImageCache.swift */,
+				21FE6B8B2A9CE270006AF78A /* ViewModels */,
+				21FE6B8A2A9CE262006AF78A /* Views */,
 			);
 			path = AvitoTestApp;
 			sourceTree = "<group>";
@@ -98,6 +94,7 @@
 		21FE6B782A9BF7BC006AF78A /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				21FE6B872A9CDD18006AF78A /* ImageCache.swift */,
 				21FE6B792A9BF7CF006AF78A /* NetworkClientProtocol.swift */,
 				21FE6B7B2A9BF7DB006AF78A /* DefaultNetworkClient.swift */,
 				21FE6B7D2A9BF7F2006AF78A /* NetworkServiceProtocol.swift */,
@@ -105,6 +102,36 @@
 				21FE6B852A9CD438006AF78A /* UIImageView+loadImage.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		21FE6B892A9CE201006AF78A /* SupportFiles */ = {
+			isa = PBXGroup;
+			children = (
+				21FE6B592A9BC6C2006AF78A /* AppDelegate.swift */,
+				21FE6B5B2A9BC6C2006AF78A /* SceneDelegate.swift */,
+				21FE6B622A9BC6C3006AF78A /* Assets.xcassets */,
+				21FE6B642A9BC6C3006AF78A /* LaunchScreen.storyboard */,
+				21FE6B672A9BC6C3006AF78A /* Info.plist */,
+			);
+			path = SupportFiles;
+			sourceTree = "<group>";
+		};
+		21FE6B8A2A9CE262006AF78A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				21FE6B5D2A9BC6C2006AF78A /* MainViewController.swift */,
+				21FE6B722A9BD6E4006AF78A /* CustomCollectionViewCell.swift */,
+				21FE6B8C2A9CE2A8006AF78A /* ScreenState.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		21FE6B8B2A9CE270006AF78A /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				21FE6B812A9C0301006AF78A /* MainViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -182,6 +209,7 @@
 				21FE6B7C2A9BF7DB006AF78A /* DefaultNetworkClient.swift in Sources */,
 				21FE6B712A9BCA63006AF78A /* Advertisements.swift in Sources */,
 				21FE6B7E2A9BF7F2006AF78A /* NetworkServiceProtocol.swift in Sources */,
+				21FE6B8D2A9CE2A8006AF78A /* ScreenState.swift in Sources */,
 				21FE6B822A9C0301006AF78A /* MainViewModel.swift in Sources */,
 				21FE6B882A9CDD18006AF78A /* ImageCache.swift in Sources */,
 				21FE6B802A9BF805006AF78A /* DefaultNetworkService.swift in Sources */,
@@ -328,7 +356,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = AvitoTestApp/Info.plist;
+				INFOPLIST_FILE = AvitoTestApp/SupportFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
@@ -355,7 +383,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = AvitoTestApp/Info.plist;
+				INFOPLIST_FILE = AvitoTestApp/SupportFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarStyle = "";

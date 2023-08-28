@@ -22,7 +22,6 @@ final class MainViewController: UIViewController {
         static let collectionViewCellSpacing: CGFloat = 10
         static let collectionViewNumberOfColumns: Int = 2
         static let collectionViewDescriptionHeight: CGFloat = 100
-        
     }
     
     private var collectionViewCellImageSize: CGSize {
@@ -51,16 +50,34 @@ final class MainViewController: UIViewController {
         return collectionView
     }()
     
-
+    private lazy var loadingIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.hidesWhenStopped = true
+        return indicator
+    }()
+    
+    private lazy var errorLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Error"
+        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 17)
+        label.isHidden = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
         viewModel.$advertisements
+            .combineLatest(viewModel.$screenState)
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] advertisements in
+            .sink { [weak self] _, screenState in
                 guard let self = self else { return }
-                self.collectionView.reloadData()
+                self.handleScreenState(screenState)
             }
             .store(in: &cancellables)
         
@@ -69,6 +86,26 @@ final class MainViewController: UIViewController {
         setupConstraints()
     }
     
+    private func handleScreenState(_ screenState: ScreenState) {
+        switch screenState {
+        case .downloading:
+            loadingIndicator.startAnimating()
+            collectionView.isHidden = true
+            errorLabel.isHidden = true
+        case .error(let message):
+            loadingIndicator.stopAnimating()
+            errorLabel.text = message
+            collectionView.isHidden = true
+            errorLabel.isHidden = false
+        case .content:
+            loadingIndicator.stopAnimating()
+            errorLabel.isHidden = true
+            collectionView.isHidden = false
+            collectionView.reloadData()
+        }
+    }
+    
+    // MARK: - Constraints
     private func setupConstraints() {
         view.addSubview(collectionView)
         NSLayoutConstraint.activate([
@@ -77,10 +114,23 @@ final class MainViewController: UIViewController {
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Layout.collectionViewHorizontalInset),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Layout.collectionViewHorizontalInset),
         ])
+        
+        view.addSubview(loadingIndicator)
+        NSLayoutConstraint.activate([
+            loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        
+        view.addSubview(errorLabel)
+        NSLayoutConstraint.activate([
+            errorLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            errorLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
     
 }
 
+// MARK: - MainViewController + UICollectionViewDataSource
 extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.advertisements.count
@@ -94,6 +144,7 @@ extension MainViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - MainViewController + UICollectionViewDelegateFlowLayout
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionViewCellSize

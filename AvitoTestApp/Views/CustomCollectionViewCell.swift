@@ -6,13 +6,11 @@
 //
 
 import UIKit
-import Combine
 
 final class CustomCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Identifier
     static let identifier = "cell"
-    private var cancellables: Set<AnyCancellable> = []
     
     // MARK: - UI Elements
     private lazy var imageView: UIImageView = {
@@ -96,7 +94,7 @@ final class CustomCollectionViewCell: UICollectionViewCell {
     }()
     
     
-    // MARK: - Inits
+    // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: .zero)
         contentView.backgroundColor = .systemBackground
@@ -117,6 +115,7 @@ final class CustomCollectionViewCell: UICollectionViewCell {
         imageView.image = nil
     }
     
+    // MARK: - Configuring the cell
     func configure(with ad: Advertisement) {
         title.text = ad.title
         price.text = ad.price
@@ -125,6 +124,7 @@ final class CustomCollectionViewCell: UICollectionViewCell {
         imageView.loadImage(from: ad.imageURL)
     }
     
+    // MARK: - Constraints
     private func setupConstraints() {
         contentView.addSubview(imageView)
         NSLayoutConstraint.activate([
