@@ -187,7 +187,15 @@ final class DetailViewController: UIViewController {
             }
             .store(in: &cancellables)
         
-        viewModel.fetchAdvertisement()
+        viewModel.$imageData
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] imageData in
+                guard let self = self else { return }
+                if let imageData = imageData, let image = UIImage(data: imageData) {
+                    self.imageView.image = image
+                }
+            }
+            .store(in: &cancellables)
         
         setupConstraints()
     }
@@ -224,23 +232,6 @@ final class DetailViewController: UIViewController {
         emailLabel.text = ad.email
         phoneLabel.text = ad.phoneNumber
         createdDateLabel.text = "Опубликовано " + ad.createdDate
-        loadImage(from: ad.imageURL)
-    }
-    
-    func loadImage(from url: String) {
-        Task {
-            do {
-                let imageData = try await networkManager.getImage(from: url)
-                if let image = UIImage(data: imageData) {
-                    DispatchQueue.main.async { [weak self] in
-                        guard let self = self else { return }
-                        self.imageView.image = image
-                    }
-                }
-            } catch {
-                print(error)
-            }
-        }
     }
     
     private func setupConstraints() {

@@ -11,6 +11,7 @@ import Combine
 final class DetailViewModel: ObservableObject {
     
     @Published var advertisement: Advertisement?
+    @Published var imageData: Data?
     @Published var screenState: ScreenState = .downloading
     
     private let id: Int
@@ -19,6 +20,7 @@ final class DetailViewModel: ObservableObject {
     init(id: Int, networkManager: NetworkManager = DefaultNetworkManager()) {
         self.id = id
         self.networkManager = networkManager
+        self.fetchAdvertisement()
     }
     
     func fetchAdvertisement() {
@@ -28,11 +30,27 @@ final class DetailViewModel: ObservableObject {
                 screenState = .downloading
                 advertisement = try await networkManager.getDetailAdvertisement(id: id)
 //                try await Task.sleep(for: .seconds(3))
+                guard let advertisement = advertisement else {
+                    screenState = .error(message: "Empty advertisement")
+                    return
+                }
+                loadImage(from: advertisement.imageURL)
                 screenState = .content
                 print("finish fetching detail ad")
             } catch {
                 screenState = .error(message: "Failed loading data")
                 print("bad detail ad")
+            }
+        }
+    }
+    
+    private func loadImage(from url: String) {
+        Task {
+            do {
+                imageData = try await networkManager.getImage(from: url)
+            } catch {
+                print(error)
+                print("bad detail image")
             }
         }
     }
