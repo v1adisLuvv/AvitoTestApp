@@ -10,9 +10,10 @@ import Combine
 
 final class MainViewModel: ObservableObject {
     
-    @Published var advertisements: [Advertisement] = []
+    @Published var cellViewModels: [CellViewModel] = []
     @Published var screenState: ScreenState = .downloading
     
+    private var advertisements: [Advertisement] = []
     private let networkManager: NetworkManager
     
     init(networkManager: NetworkManager = DefaultNetworkManager()) {
@@ -25,6 +26,7 @@ final class MainViewModel: ObservableObject {
                 print("start fetching ads")
                 screenState = .downloading
                 advertisements = try await networkManager.getAdvertisements()
+                cellViewModels = advertisements.map { CellViewModel(ad: $0) }
 //                try await Task.sleep(for: .seconds(3))
                 screenState = .content
                 print("finish fetching ads")

@@ -72,7 +72,7 @@ final class MainViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
-        viewModel.$advertisements
+        viewModel.$cellViewModels
             .combineLatest(viewModel.$screenState)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _, screenState in
@@ -133,18 +133,15 @@ final class MainViewController: UIViewController {
 // MARK: - MainViewController + UICollectionViewDataSource
 extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.advertisements.count
+        return viewModel.cellViewModels.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.identifier, for: indexPath) as? CustomCollectionViewCell else {
             fatalError("Cannot cast cell")
         }
-        let ad = viewModel.advertisements[indexPath.item]
-        cell.configure(with: ad)
-        if cell.currentID == ad.id {
-            cell.loadImage(from: ad.imageURL, id: ad.id)
-        }
+        let viewModel = viewModel.cellViewModels[indexPath.item]
+        cell.configure(with: viewModel)
         return cell
     }
 }

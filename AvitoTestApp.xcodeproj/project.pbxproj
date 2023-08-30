@@ -14,6 +14,7 @@
 		21F7723B2A9F7023009E0AEC /* NetworkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F7723A2A9F7023009E0AEC /* NetworkRouter.swift */; };
 		21F7723D2A9F7B70009E0AEC /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F7723C2A9F7B70009E0AEC /* NetworkManager.swift */; };
 		21F7723F2A9F7C0F009E0AEC /* AdvertisementsApiEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F7723E2A9F7C0F009E0AEC /* AdvertisementsApiEndpoint.swift */; };
+		21F772452A9FF2D9009E0AEC /* CellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F772442A9FF2D9009E0AEC /* CellViewModel.swift */; };
 		21FE6B5A2A9BC6C2006AF78A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B592A9BC6C2006AF78A /* AppDelegate.swift */; };
 		21FE6B5C2A9BC6C2006AF78A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B5B2A9BC6C2006AF78A /* SceneDelegate.swift */; };
 		21FE6B5E2A9BC6C2006AF78A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B5D2A9BC6C2006AF78A /* MainViewController.swift */; };
@@ -35,6 +36,7 @@
 		21F7723A2A9F7023009E0AEC /* NetworkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRouter.swift; sourceTree = "<group>"; };
 		21F7723C2A9F7B70009E0AEC /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		21F7723E2A9F7C0F009E0AEC /* AdvertisementsApiEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisementsApiEndpoint.swift; sourceTree = "<group>"; };
+		21F772442A9FF2D9009E0AEC /* CellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellViewModel.swift; sourceTree = "<group>"; };
 		21FE6B562A9BC6C2006AF78A /* AvitoTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AvitoTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21FE6B592A9BC6C2006AF78A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21FE6B5B2A9BC6C2006AF78A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 			children = (
 				21FE6B812A9C0301006AF78A /* MainViewModel.swift */,
 				21F772312A9E9E6E009E0AEC /* DetailViewModel.swift */,
+				21F772442A9FF2D9009E0AEC /* CellViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -223,6 +226,7 @@
 				21FE6B882A9CDD18006AF78A /* ImageCache.swift in Sources */,
 				21FE6B5A2A9BC6C2006AF78A /* AppDelegate.swift in Sources */,
 				21F772352A9F6CD0009E0AEC /* HTTPMethod.swift in Sources */,
+				21F772452A9FF2D9009E0AEC /* CellViewModel.swift in Sources */,
 				21FE6B5C2A9BC6C2006AF78A /* SceneDelegate.swift in Sources */,
 				21F7723B2A9F7023009E0AEC /* NetworkRouter.swift in Sources */,
 				21F772372A9F6D18009E0AEC /* NetworkError.swift in Sources */,
