@@ -11,6 +11,9 @@ final class CustomCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Identifier
     static let identifier = "cell"
+    var currentID: String?
+    
+    private let networkManager: NetworkManager = DefaultNetworkManager()
     
     // MARK: - UI Elements
     private lazy var imageView: UIImageView = {
@@ -18,7 +21,7 @@ final class CustomCollectionViewCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 8
-        imageView.backgroundColor = .green
+        imageView.backgroundColor = .lightGray
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -113,15 +116,37 @@ final class CustomCollectionViewCell: UICollectionViewCell {
         locationLabel.text = ""
         createdDateLabel.text = ""
         imageView.image = nil
+        currentID = nil
     }
     
     // MARK: - Configuring the cell
     func configure(with ad: Advertisement) {
+        currentID = ad.id
         titleLabel.text = ad.title
         priceLabel.text = ad.price
         locationLabel.text = ad.location
         createdDateLabel.text = ad.createdDate
-        imageView.loadImage(from: ad.imageURL)
+    }
+    
+    func loadImage(from url: String, id: String) {
+        Task {
+            do {
+                let imageData = try await networkManager.getImage(from: url)
+                if let image = UIImage(data: imageData) {
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
+                        if id == currentID {
+                            self.imageView.image = image
+                        }
+                    }
+                }
+            } catch {
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    self.imageView.image = UIImage(systemName: "wifi.slash")
+                }
+            }
+        }
     }
     
     // MARK: - Constraints

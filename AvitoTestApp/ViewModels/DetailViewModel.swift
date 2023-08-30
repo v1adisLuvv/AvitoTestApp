@@ -10,28 +10,27 @@ import Combine
 
 final class DetailViewModel: ObservableObject {
     
-    @Published var advertisement: Advertisement = Advertisement(id: "1", title: "", price: "", location: "", imageURL: "", createdDate: "", description: "", email: "", phoneNumber: "", address: "")
+    @Published var advertisement: Advertisement?
     @Published var screenState: ScreenState = .downloading
-    private var id: Int
     
-    init(id: Int) {
+    private let id: Int
+    private let networkManager: NetworkManager
+    
+    init(id: Int, networkManager: NetworkManager = DefaultNetworkManager()) {
         self.id = id
+        self.networkManager = networkManager
     }
-    
-    private let networkService = DefaultNetworkService()
     
     func fetchAdvertisement() {
         Task {
             do {
                 print("start fetching detail ad")
                 screenState = .downloading
-                advertisement = try await networkService.fetchDetailAdveritisement(id: id)
+                advertisement = try await networkManager.getDetailAdvertisement(id: id)
 //                try await Task.sleep(for: .seconds(3))
-                // create detail screen, flashing previews in a downloading state
-                // review the network layer
                 screenState = .content
                 print("finish fetching detail ad")
-            } catch NetworkClientError.invalidResponseCode {
+            } catch {
                 screenState = .error(message: "Failed loading data")
                 print("bad detail ad")
             }

@@ -137,9 +137,14 @@ extension MainViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.identifier, for: indexPath) as! CustomCollectionViewCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.identifier, for: indexPath) as? CustomCollectionViewCell else {
+            fatalError("Cannot cast cell")
+        }
         let ad = viewModel.advertisements[indexPath.item]
         cell.configure(with: ad)
+        if cell.currentID == ad.id {
+            cell.loadImage(from: ad.imageURL, id: ad.id)
+        }
         return cell
     }
 }

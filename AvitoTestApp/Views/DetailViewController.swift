@@ -10,8 +10,9 @@ import Combine
 
 final class DetailViewController: UIViewController {
     
-    private var id: Int
-    private var viewModel: DetailViewModel
+    private let id: Int
+    private let viewModel: DetailViewModel
+    private let networkManager: NetworkManager
     private var cancellables: Set<AnyCancellable> = []
     
     // MARK: - Layout
@@ -36,7 +37,7 @@ final class DetailViewController: UIViewController {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
-        imageView.backgroundColor = .green
+        imageView.backgroundColor = .lightGray
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -81,12 +82,30 @@ final class DetailViewController: UIViewController {
         return label
     }()
     
+    private lazy var descriptionTitle: UILabel = {
+        let label = UILabel()
+        label.text = "Описание"
+        label.textAlignment = .left
+        label.font = .systemFont(ofSize: 22, weight: .bold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
         label.textAlignment = .left
         label.font = .systemFont(ofSize: 17)
         label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var aboutSellerLabel: UILabel = {
+        let label = UILabel()
+        label.text = "О продавце"
+        label.textAlignment = .left
+        label.font = .systemFont(ofSize: 22, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -144,9 +163,10 @@ final class DetailViewController: UIViewController {
         return label
     }()
     
-    init(id: Int) {
+    init(id: Int, networkManager: NetworkManager = DefaultNetworkManager()) {
         self.id = id
         self.viewModel = DetailViewModel(id: id)
+        self.networkManager = networkManager
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -172,7 +192,7 @@ final class DetailViewController: UIViewController {
         setupConstraints()
     }
     
-    private func handleScreenState(_ advertisement: Advertisement, _ screenState: ScreenState) {
+    private func handleScreenState(_ advertisement: Advertisement?, _ screenState: ScreenState) {
         switch screenState {
         case .downloading:
             loadingIndicator.startAnimating()
@@ -184,6 +204,10 @@ final class DetailViewController: UIViewController {
             contentView.isHidden = true
             errorLabel.isHidden = false
         case .content:
+            guard let advertisement = advertisement else {
+                viewModel.screenState = .error(message: "Empty advertisement")
+                return
+            }
             loadingIndicator.stopAnimating()
             errorLabel.isHidden = true
             contentView.isHidden = false
@@ -199,8 +223,24 @@ final class DetailViewController: UIViewController {
         descriptionLabel.text = ad.description
         emailLabel.text = ad.email
         phoneLabel.text = ad.phoneNumber
-        createdDateLabel.text = ad.createdDate
-        imageView.loadImage(from: ad.imageURL)
+        createdDateLabel.text = "Опубликовано " + ad.createdDate
+        loadImage(from: ad.imageURL)
+    }
+    
+    func loadImage(from url: String) {
+        Task {
+            do {
+                let imageData = try await networkManager.getImage(from: url)
+                if let image = UIImage(data: imageData) {
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
+                        self.imageView.image = image
+                    }
+                }
+            } catch {
+                print(error)
+            }
+        }
     }
     
     private func setupConstraints() {
@@ -286,16 +326,30 @@ final class DetailViewController: UIViewController {
             addressLabel.trailingAnchor.constraint(equalTo: descriptionView.trailingAnchor)
         ])
         
+        descriptionView.addSubview(descriptionTitle)
+        NSLayoutConstraint.activate([
+            descriptionTitle.topAnchor.constraint(equalTo: addressLabel.bottomAnchor, constant: 20),
+            descriptionTitle.leadingAnchor.constraint(equalTo: descriptionView.leadingAnchor),
+            descriptionTitle.trailingAnchor.constraint(equalTo: descriptionView.trailingAnchor)
+        ])
+        
         descriptionView.addSubview(descriptionLabel)
         NSLayoutConstraint.activate([
-            descriptionLabel.topAnchor.constraint(equalTo: addressLabel.bottomAnchor, constant: 30),
+            descriptionLabel.topAnchor.constraint(equalTo: descriptionTitle.bottomAnchor, constant: 10),
             descriptionLabel.leadingAnchor.constraint(equalTo: descriptionView.leadingAnchor),
             descriptionLabel.trailingAnchor.constraint(equalTo: descriptionView.trailingAnchor),
         ])
         
+        descriptionView.addSubview(aboutSellerLabel)
+        NSLayoutConstraint.activate([
+            aboutSellerLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 20),
+            aboutSellerLabel.leadingAnchor.constraint(equalTo: descriptionView.leadingAnchor),
+            aboutSellerLabel.trailingAnchor.constraint(equalTo: descriptionView.trailingAnchor)
+        ])
+        
         descriptionView.addSubview(emailLabel)
         NSLayoutConstraint.activate([
-            emailLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 30),
+            emailLabel.topAnchor.constraint(equalTo: aboutSellerLabel.bottomAnchor, constant: 10),
             emailLabel.leadingAnchor.constraint(equalTo: descriptionView.leadingAnchor),
             emailLabel.trailingAnchor.constraint(equalTo: descriptionView.trailingAnchor),
         ])
