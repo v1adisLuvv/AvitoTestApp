@@ -23,6 +23,7 @@ final class DefaultNetworkClient: NetworkClientProtocol {
             throw NetworkClientError.invalidResponseType
         }
         guard (200..<300).contains(response.statusCode) else {
+            print(response)
             throw NetworkClientError.invalidResponseCode
         }
         return data

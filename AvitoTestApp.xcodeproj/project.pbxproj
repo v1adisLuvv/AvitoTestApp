@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		21F772322A9E9E6E009E0AEC /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F772312A9E9E6E009E0AEC /* DetailViewModel.swift */; };
 		21FE6B5A2A9BC6C2006AF78A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B592A9BC6C2006AF78A /* AppDelegate.swift */; };
 		21FE6B5C2A9BC6C2006AF78A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B5B2A9BC6C2006AF78A /* SceneDelegate.swift */; };
 		21FE6B5E2A9BC6C2006AF78A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B5D2A9BC6C2006AF78A /* MainViewController.swift */; };
@@ -22,9 +23,11 @@
 		21FE6B862A9CD438006AF78A /* UIImageView+loadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B852A9CD438006AF78A /* UIImageView+loadImage.swift */; };
 		21FE6B882A9CDD18006AF78A /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B872A9CDD18006AF78A /* ImageCache.swift */; };
 		21FE6B8D2A9CE2A8006AF78A /* ScreenState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B8C2A9CE2A8006AF78A /* ScreenState.swift */; };
+		21FE6B8F2A9E07D5006AF78A /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FE6B8E2A9E07D5006AF78A /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		21F772312A9E9E6E009E0AEC /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		21FE6B562A9BC6C2006AF78A /* AvitoTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AvitoTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21FE6B592A9BC6C2006AF78A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21FE6B5B2A9BC6C2006AF78A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -42,6 +45,7 @@
 		21FE6B852A9CD438006AF78A /* UIImageView+loadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+loadImage.swift"; sourceTree = "<group>"; };
 		21FE6B872A9CDD18006AF78A /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		21FE6B8C2A9CE2A8006AF78A /* ScreenState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenState.swift; sourceTree = "<group>"; };
+		21FE6B8E2A9E07D5006AF78A /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +126,7 @@
 				21FE6B5D2A9BC6C2006AF78A /* MainViewController.swift */,
 				21FE6B722A9BD6E4006AF78A /* CustomCollectionViewCell.swift */,
 				21FE6B8C2A9CE2A8006AF78A /* ScreenState.swift */,
+				21FE6B8E2A9E07D5006AF78A /* DetailViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -130,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				21FE6B812A9C0301006AF78A /* MainViewModel.swift */,
+				21F772312A9E9E6E009E0AEC /* DetailViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -217,6 +223,8 @@
 				21FE6B5A2A9BC6C2006AF78A /* AppDelegate.swift in Sources */,
 				21FE6B5C2A9BC6C2006AF78A /* SceneDelegate.swift in Sources */,
 				21FE6B7A2A9BF7CF006AF78A /* NetworkClientProtocol.swift in Sources */,
+				21F772322A9E9E6E009E0AEC /* DetailViewModel.swift in Sources */,
+				21FE6B8F2A9E07D5006AF78A /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

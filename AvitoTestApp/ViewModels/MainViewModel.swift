@@ -21,7 +21,9 @@ final class MainViewModel: ObservableObject {
                 print("start fetching ads")
                 screenState = .downloading
                 advertisements = try await networkService.fetchAdvertisements()
-                sleep(1)
+//                try await Task.sleep(for: .seconds(3))
+                // create detail screen, flashing previews in a downloading state
+                // review the network layer
                 screenState = .content
                 print("finish fetching ads")
             } catch {

@@ -23,7 +23,7 @@ final class CustomCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    private lazy var title: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Title placeholder"
         label.textAlignment = .left
@@ -33,7 +33,7 @@ final class CustomCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private lazy var price: UILabel = {
+    private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.text = "49 999 ₽"
         label.textAlignment = .left
@@ -43,7 +43,7 @@ final class CustomCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private lazy var location: UILabel = {
+    private lazy var locationLabel: UILabel = {
         let label = UILabel()
         label.text = "Moscow, Req Square"
         label.textAlignment = .left
@@ -54,7 +54,7 @@ final class CustomCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private lazy var createdDate: UILabel = {
+    private lazy var createdDateLabel: UILabel = {
         let label = UILabel()
         label.text = "15 July"
         label.textAlignment = .left
@@ -73,8 +73,8 @@ final class CustomCollectionViewCell: UICollectionViewCell {
         stack.distribution = .fillEqually
         stack.translatesAutoresizingMaskIntoConstraints = false
         
-        stack.addArrangedSubview(location)
-        stack.addArrangedSubview(createdDate)
+        stack.addArrangedSubview(locationLabel)
+        stack.addArrangedSubview(createdDateLabel)
         
         return stack
     }()
@@ -86,8 +86,8 @@ final class CustomCollectionViewCell: UICollectionViewCell {
         stack.distribution = .fillEqually
         stack.translatesAutoresizingMaskIntoConstraints = false
         
-        stack.addArrangedSubview(title)
-        stack.addArrangedSubview(price)
+        stack.addArrangedSubview(titleLabel)
+        stack.addArrangedSubview(priceLabel)
         stack.addArrangedSubview(locationAndDateStackView)
         
         return stack
@@ -108,19 +108,19 @@ final class CustomCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        title.text = ""
-        price.text = ""
-        location.text = ""
-        createdDate.text = ""
+        titleLabel.text = ""
+        priceLabel.text = ""
+        locationLabel.text = ""
+        createdDateLabel.text = ""
         imageView.image = nil
     }
     
     // MARK: - Configuring the cell
     func configure(with ad: Advertisement) {
-        title.text = ad.title
-        price.text = ad.price
-        location.text = ad.location
-        createdDate.text = ad.createdDate
+        titleLabel.text = ad.title
+        priceLabel.text = ad.price
+        locationLabel.text = ad.location
+        createdDateLabel.text = ad.createdDate
         imageView.loadImage(from: ad.imageURL)
     }
     

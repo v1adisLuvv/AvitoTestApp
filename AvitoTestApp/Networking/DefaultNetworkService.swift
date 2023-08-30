@@ -18,8 +18,8 @@ final class DefaultNetworkService: NetworkServiceProtocol {
         return ads.advertisements
     }
     
-    func fetchDetailAdveritisement(id: String) async throws -> Advertisement {
-        let url = baseURL + "/\(id).json"
+    func fetchDetailAdveritisement(id: Int) async throws -> Advertisement {
+        let url = baseURL + "/details/\(id).json"
         return try await networkClient.fetchCodableData(url: url)
     }
 }
