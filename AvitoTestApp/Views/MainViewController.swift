@@ -21,7 +21,7 @@ final class MainViewController: UIViewController {
         
         static let collectionViewCellSpacing: CGFloat = 10
         static let collectionViewNumberOfColumns: Int = 2
-        static let collectionViewDescriptionHeight: CGFloat = 100
+        static let collectionViewDescriptionHeight: CGFloat = 125
     }
     
     private var collectionViewCellImageSize: CGSize {
@@ -43,7 +43,7 @@ final class MainViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.identifier)
+        collectionView.register(CustomCell.self, forCellWithReuseIdentifier: CustomCell.identifier)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -81,11 +81,10 @@ final class MainViewController: UIViewController {
             }
             .store(in: &cancellables)
         
-        viewModel.fetchAdvertisements()
-        
         setupConstraints()
     }
     
+    // MARK: - Update screen with state
     private func handleScreenState(_ screenState: ScreenState) {
         switch screenState {
         case .downloading:
@@ -137,7 +136,7 @@ extension MainViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.identifier, for: indexPath) as? CustomCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCell.identifier, for: indexPath) as? CustomCell else {
             fatalError("Cannot cast cell")
         }
         let viewModel = viewModel.cellViewModels[indexPath.item]

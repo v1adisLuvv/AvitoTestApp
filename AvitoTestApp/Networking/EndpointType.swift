@@ -7,6 +7,7 @@
 
 import Foundation
 
+// every network request should be performed via Endpoint object that conforms to this protocol
 protocol EndpointType {
     var baseURL: URL { get }
     var path: String { get }

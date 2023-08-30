@@ -8,13 +8,14 @@
 import Foundation
 
 protocol NetworkRouter {
-    func request(_ route: some EndpointType) async throws -> (Data, URLResponse)
+    func request<Endpoint: EndpointType>(_ route: Endpoint) async throws -> (Data, URLResponse)
     func loadImage(from url: String) async throws -> (Data, URLResponse)
 }
 
 final class DefaultNetworkRouter: NetworkRouter {
     
-    func request(_ route: some EndpointType) async throws -> (Data, URLResponse) {
+    // MARK: - NetworkRouter methods
+    func request<Endpoint: EndpointType>(_ route: Endpoint) async throws -> (Data, URLResponse) {
         let request = buildRequest(from: route)
         let (data, response) = try await URLSession.shared.data(for: request)
         return (data, response)
@@ -26,7 +27,8 @@ final class DefaultNetworkRouter: NetworkRouter {
         return (data, response)
     }
     
-    private func buildRequest(from route: some EndpointType) -> URLRequest {
+    // MARK: - Build Request private methods
+    private func buildRequest<Endpoint: EndpointType>(from route: Endpoint) -> URLRequest {
         var request = URLRequest(url: route.baseURL.appending(path: route.path), timeoutInterval: route.timeoutInterval)
         request.httpMethod = route.httpMethod.rawValue
         return request

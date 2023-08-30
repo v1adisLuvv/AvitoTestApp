@@ -8,11 +8,14 @@
 import Foundation
 import Combine
 
-final class CellViewModel: ObservableObject {
+@MainActor final class CellViewModel: ObservableObject {
     
+    // MARK: - Combine Published values
     @Published var imageData: Data?
     
     let ad: Advertisement
+    
+    // MARK: - Dependencies
     private let networkManager: NetworkManager
     
     init(ad: Advertisement, networkManager: NetworkManager = DefaultNetworkManager()) {

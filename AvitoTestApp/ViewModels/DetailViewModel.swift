@@ -8,13 +8,16 @@
 import Foundation
 import Combine
 
-final class DetailViewModel: ObservableObject {
+@MainActor final class DetailViewModel: ObservableObject {
     
+    // MARK: - Combine Published values
     @Published var advertisement: Advertisement?
     @Published var imageData: Data?
     @Published var screenState: ScreenState = .downloading
     
     private let id: Int
+    
+    // MARK: - Dependencies
     private let networkManager: NetworkManager
     
     init(id: Int, networkManager: NetworkManager = DefaultNetworkManager()) {
@@ -23,7 +26,7 @@ final class DetailViewModel: ObservableObject {
         self.fetchAdvertisement()
     }
     
-    func fetchAdvertisement() {
+    private func fetchAdvertisement() {
         Task {
             do {
                 print("start fetching detail ad")

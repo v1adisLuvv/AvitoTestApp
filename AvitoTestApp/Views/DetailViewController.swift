@@ -10,14 +10,21 @@ import Combine
 
 final class DetailViewController: UIViewController {
     
+    // MARK: - Variables
     private let id: Int
     private let viewModel: DetailViewModel
-    private let networkManager: NetworkManager
     private var cancellables: Set<AnyCancellable> = []
     
     // MARK: - Layout
     private struct Layout {
         static let descriptionViewInset: CGFloat = 10
+        static let titleToLocationLabelOffset: CGFloat = 30
+        static let addressToDescriptionTitleOffset: CGFloat = 20
+        static let descriptionTitleToDescriptionLabelOffset: CGFloat = 10
+        static let descriptionLabelToAboutSellerLabelOffset: CGFloat = 20
+        static let aboutSellerToEmailLabelOffset: CGFloat = 10
+        static let emailToPhoneLabelOffset: CGFloat = 5
+        static let phoneToCreatedDateOffset: CGFloat = 10
     }
     
     // MARK: - UI Elements
@@ -27,7 +34,7 @@ final class DetailViewController: UIViewController {
         return scrollView
     }()
     
-    private lazy var contentView: UIView = {
+    private lazy var contentView: UIView = { // content view for scroll view
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -140,6 +147,7 @@ final class DetailViewController: UIViewController {
         return label
     }()
     
+    // all views except image will be places inside this view
     private lazy var descriptionView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -163,10 +171,10 @@ final class DetailViewController: UIViewController {
         return label
     }()
     
-    init(id: Int, networkManager: NetworkManager = DefaultNetworkManager()) {
+    // MARK: - Lifecycle
+    init(id: Int) {
         self.id = id
         self.viewModel = DetailViewModel(id: id)
-        self.networkManager = networkManager
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -223,6 +231,7 @@ final class DetailViewController: UIViewController {
         }
     }
     
+    // MARK: - Configuring the screen
     private func setupContent(with ad: Advertisement) {
         priceLabel.text = ad.price
         titleLabel.text = ad.title
@@ -231,9 +240,21 @@ final class DetailViewController: UIViewController {
         descriptionLabel.text = ad.description
         emailLabel.text = ad.email
         phoneLabel.text = ad.phoneNumber
-        createdDateLabel.text = "Опубликовано " + ad.createdDate
+        createdDateLabel.text = "Опубликовано " + handleDate(ad.createdDate)
     }
     
+    private func handleDate(_ dateString: String) -> String {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyy-MM-dd"
+        guard let date = inputFormatter.date(from: dateString) else {
+            return "неизвестно"
+        }
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "d MMMM, yyyy"
+        return outputFormatter.string(from: date)
+    }
+    
+    // MARK: - Constraints
     private func setupConstraints() {
         view.addSubview(scrollView)
         NSLayoutConstraint.activate([
@@ -256,6 +277,7 @@ final class DetailViewController: UIViewController {
         ])
         
         
+        
         view.addSubview(loadingIndicator)
         NSLayoutConstraint.activate([
             loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -267,6 +289,7 @@ final class DetailViewController: UIViewController {
             errorLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             errorLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
+        
         
         
         contentView.addSubview(imageView)
@@ -305,7 +328,8 @@ final class DetailViewController: UIViewController {
         
         descriptionView.addSubview(locationLabel)
         NSLayoutConstraint.activate([
-            locationLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 30),
+            locationLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,
+                                               constant: Layout.titleToLocationLabelOffset),
             locationLabel.leadingAnchor.constraint(equalTo: descriptionView.leadingAnchor),
             locationLabel.trailingAnchor.constraint(equalTo: descriptionView.trailingAnchor)
         ])
@@ -319,42 +343,48 @@ final class DetailViewController: UIViewController {
         
         descriptionView.addSubview(descriptionTitle)
         NSLayoutConstraint.activate([
-            descriptionTitle.topAnchor.constraint(equalTo: addressLabel.bottomAnchor, constant: 20),
+            descriptionTitle.topAnchor.constraint(equalTo: addressLabel.bottomAnchor,
+                                                  constant: Layout.addressToDescriptionTitleOffset),
             descriptionTitle.leadingAnchor.constraint(equalTo: descriptionView.leadingAnchor),
             descriptionTitle.trailingAnchor.constraint(equalTo: descriptionView.trailingAnchor)
         ])
         
         descriptionView.addSubview(descriptionLabel)
         NSLayoutConstraint.activate([
-            descriptionLabel.topAnchor.constraint(equalTo: descriptionTitle.bottomAnchor, constant: 10),
+            descriptionLabel.topAnchor.constraint(equalTo: descriptionTitle.bottomAnchor,
+                                                  constant: Layout.descriptionTitleToDescriptionLabelOffset),
             descriptionLabel.leadingAnchor.constraint(equalTo: descriptionView.leadingAnchor),
             descriptionLabel.trailingAnchor.constraint(equalTo: descriptionView.trailingAnchor),
         ])
         
         descriptionView.addSubview(aboutSellerLabel)
         NSLayoutConstraint.activate([
-            aboutSellerLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 20),
+            aboutSellerLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor,
+                                                  constant: Layout.descriptionLabelToAboutSellerLabelOffset),
             aboutSellerLabel.leadingAnchor.constraint(equalTo: descriptionView.leadingAnchor),
             aboutSellerLabel.trailingAnchor.constraint(equalTo: descriptionView.trailingAnchor)
         ])
         
         descriptionView.addSubview(emailLabel)
         NSLayoutConstraint.activate([
-            emailLabel.topAnchor.constraint(equalTo: aboutSellerLabel.bottomAnchor, constant: 10),
+            emailLabel.topAnchor.constraint(equalTo: aboutSellerLabel.bottomAnchor,
+                                            constant: Layout.aboutSellerToEmailLabelOffset),
             emailLabel.leadingAnchor.constraint(equalTo: descriptionView.leadingAnchor),
             emailLabel.trailingAnchor.constraint(equalTo: descriptionView.trailingAnchor),
         ])
         
         descriptionView.addSubview(phoneLabel)
         NSLayoutConstraint.activate([
-            phoneLabel.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 5),
+            phoneLabel.topAnchor.constraint(equalTo: emailLabel.bottomAnchor,
+                                            constant: Layout.emailToPhoneLabelOffset),
             phoneLabel.leadingAnchor.constraint(equalTo: descriptionView.leadingAnchor),
             phoneLabel.trailingAnchor.constraint(equalTo: descriptionView.trailingAnchor),
         ])
         
         descriptionView.addSubview(createdDateLabel)
         NSLayoutConstraint.activate([
-            createdDateLabel.topAnchor.constraint(equalTo: phoneLabel.bottomAnchor, constant: 10),
+            createdDateLabel.topAnchor.constraint(equalTo: phoneLabel.bottomAnchor,
+                                                  constant: Layout.phoneToCreatedDateOffset),
             createdDateLabel.leadingAnchor.constraint(equalTo: descriptionView.leadingAnchor),
             createdDateLabel.trailingAnchor.constraint(equalTo: descriptionView.trailingAnchor),
             createdDateLabel.bottomAnchor.constraint(equalTo: descriptionView.bottomAnchor)

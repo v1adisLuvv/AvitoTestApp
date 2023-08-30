@@ -16,14 +16,16 @@ protocol NetworkManager {
 
 final class DefaultNetworkManager: NetworkManager {
     
+    // MARK: - Dependencies
     let router: NetworkRouter
     
     init(router: NetworkRouter = DefaultNetworkRouter()) {
         self.router = router
     }
     
+    // MARK: - NetworkManager methods
     func getAdvertisements() async throws -> [Advertisement] {
-        let (data, response) = try await router.request(AdvertisementsApiEndpoint.main)
+        let (data, response) = try await router.request(AdvertisementsEndpoint.main)
         if let error = handleResponse(response) {
             throw error
         }
@@ -35,7 +37,7 @@ final class DefaultNetworkManager: NetworkManager {
     }
     
     func getDetailAdvertisement(id: Int) async throws -> Advertisement {
-        let (data, response) = try await router.request(AdvertisementsApiEndpoint.detail(id: id))
+        let (data, response) = try await router.request(AdvertisementsEndpoint.detail(id: id))
         if let error = handleResponse(response) {
             throw error
         }
@@ -58,6 +60,7 @@ final class DefaultNetworkManager: NetworkManager {
         return data
     }
     
+    // MARK: - Handling response private methods
     private func decodeResponse<T: Decodable>(_ data: Data) -> T? {
         do {
             let result = try JSONDecoder().decode(T.self, from: data)

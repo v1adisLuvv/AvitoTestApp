@@ -1,5 +1,5 @@
 //
-//  CustomCollectionViewCell.swift
+//  CustomCell.swift
 //  AvitoTestApp
 //
 //  Created by Vlad Boguzh on 2023-08-27.
@@ -8,10 +8,13 @@
 import UIKit
 import Combine
 
-final class CustomCollectionViewCell: UICollectionViewCell {
+final class CustomCell: UICollectionViewCell {
     
     // MARK: - Identifier
     static let identifier = "cell"
+    
+    // MARK: - Variables
+    // used to compare the current cell id with downloaded image id to avoid image misplacing
     var currentID: String?
     
     private var cancellables: Set<AnyCancellable> = []
@@ -126,17 +129,28 @@ final class CustomCollectionViewCell: UICollectionViewCell {
         titleLabel.text = viewModel.ad.title
         priceLabel.text = viewModel.ad.price
         locationLabel.text = viewModel.ad.location
-        createdDateLabel.text = viewModel.ad.createdDate
+        createdDateLabel.text = handleDate(viewModel.ad.createdDate)
         
         viewModel.$imageData
             .receive(on: DispatchQueue.main)
             .sink { [weak self] imageData in
                 guard let self = self else { return }
-                if let imageData = imageData, let image = UIImage(data: imageData) {
+                if let imageData = imageData, let image = UIImage(data: imageData), currentID == viewModel.ad.id {
                     self.imageView.image = image
                 }
             }
             .store(in: &cancellables)
+    }
+    
+    private func handleDate(_ dateString: String) -> String {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyy-MM-dd"
+        guard let date = inputFormatter.date(from: dateString) else {
+            return ""
+        }
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "d MMM, yyyy"
+        return outputFormatter.string(from: date)
     }
     
     // MARK: - Constraints

@@ -1,5 +1,5 @@
 //
-//  AdvertisementsApiEndpoint.swift
+//  AdvertisementsEndpoint.swift
 //  AvitoTestApp
 //
 //  Created by Vlad Boguzh on 2023-08-30.
@@ -7,12 +7,12 @@
 
 import Foundation
 
-enum AdvertisementsApiEndpoint {
+enum AdvertisementsEndpoint {
     case main
     case detail(id: Int)
 }
 
-extension AdvertisementsApiEndpoint: EndpointType {
+extension AdvertisementsEndpoint: EndpointType {
     var baseURL: URL {
         let urlString = "https://www.avito.st/s/interns-ios/"
         guard let url = URL(string: urlString) else { fatalError("base URL is invalid") }

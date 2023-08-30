@@ -8,19 +8,23 @@
 import Foundation
 import Combine
 
-final class MainViewModel: ObservableObject {
+@MainActor final class MainViewModel: ObservableObject {
     
+    // MARK: - Combine Published values
     @Published var cellViewModels: [CellViewModel] = []
     @Published var screenState: ScreenState = .downloading
     
     private var advertisements: [Advertisement] = []
+    
+    // MARK: - Dependencies
     private let networkManager: NetworkManager
     
     init(networkManager: NetworkManager = DefaultNetworkManager()) {
         self.networkManager = networkManager
+        self.fetchAdvertisements()
     }
     
-    func fetchAdvertisements() {
+    private func fetchAdvertisements() {
         Task {
             do {
                 print("start fetching ads")
