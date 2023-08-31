@@ -33,6 +33,6 @@ extension AdvertisementsEndpoint: EndpointType {
     }
     
     var timeoutInterval: TimeInterval {
-        return 10
+        return 5
     }
 }

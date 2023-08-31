@@ -8,7 +8,6 @@
 import Foundation
 
 protocol NetworkManager {
-    var router: NetworkRouter { get }
     func getAdvertisements() async throws -> [Advertisement]
     func getDetailAdvertisement(id: Int) async throws -> Advertisement
     func getImage(from url: String) async throws -> Data
@@ -17,7 +16,7 @@ protocol NetworkManager {
 final class DefaultNetworkManager: NetworkManager {
     
     // MARK: - Dependencies
-    let router: NetworkRouter
+    private let router: NetworkRouter
     
     init(router: NetworkRouter = DefaultNetworkRouter()) {
         self.router = router

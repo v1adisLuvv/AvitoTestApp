@@ -137,7 +137,9 @@ extension MainViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCell.identifier, for: indexPath) as? CustomCell else {
-            fatalError("Cannot cast cell")
+            let cell = UICollectionViewCell()
+            cell.backgroundColor = .lightGray
+            return cell
         }
         let viewModel = viewModel.cellViewModels[indexPath.item]
         cell.configure(with: viewModel)
@@ -148,7 +150,7 @@ extension MainViewController: UICollectionViewDataSource {
 // MARK: - MainViewController + UICollectionViewDelegateFlowLayout
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = DetailViewController(id: indexPath.item + 1)
+        let vc = DetailViewController(id: indexPath.item + 1) // IDs start from 1
         navigationController?.pushViewController(vc, animated: true)
     }
     

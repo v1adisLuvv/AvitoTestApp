@@ -27,13 +27,11 @@ import Combine
     private func fetchAdvertisements() {
         Task {
             do {
-                print("start fetching ads")
                 screenState = .downloading
                 advertisements = try await networkManager.getAdvertisements()
                 cellViewModels = advertisements.map { CellViewModel(ad: $0) }
 //                try await Task.sleep(for: .seconds(3))
                 screenState = .content
-                print("finish fetching ads")
             } catch NetworkError.noInternetConnection {
                 screenState = .error(message: "Нет подключения к интернету")
             } catch NetworkError.timeout {
