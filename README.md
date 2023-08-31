@@ -5,29 +5,29 @@
 Картинки отображаются по мере загрузки. Для того чтобы картинки отображались в нужных ячейках используется проверка по ID (из-за переспользования ячеек).
 После того как картинка была загружена, она добавляется в кэш, и в следующий раз будет загружена из него.
 
-<img src="https://github.com/v1adisLuvv/AvitoTestApp/blob/master/general.gif" width="20%">
+<img src="https://github.com/v1adisLuvv/AvitoTestApp/blob/master/Images/general.gif" width="20%">
 
 ### Экран деталей:
 На экране деталей поведение схоже с главным экраном. Сначала показываются надписи, потом отображается картинка по мере загрузки.
 
-<img src="https://github.com/v1adisLuvv/AvitoTestApp/blob/master/detail.gif" width="20%">
+<img src="https://github.com/v1adisLuvv/AvitoTestApp/blob/master/Images/detail.gif" width="20%">
 
 ### Состояние загрузки:
 В состоянии загрузки отображается дефолтный activity indicator.
 
-<img src="https://github.com/v1adisLuvv/AvitoTestApp/blob/master/loading.gif" width="20%">
+<img src="https://github.com/v1adisLuvv/AvitoTestApp/blob/master/Images/loading.gif" width="20%">
 
 ### Состояние ошибки:
 В случае плохого соединения после таймаута на экране будет написано "Timeout".
 
 <p float="left">
-    <img src="https://github.com/v1adisLuvv/AvitoTestApp/blob/master/timeout.gif" width="20%">
-    <img src="https://github.com/v1adisLuvv/AvitoTestApp/blob/master/timeout.png" width="20%">
+    <img src="https://github.com/v1adisLuvv/AvitoTestApp/blob/master/Images/timeout.gif" width="20%">
+    <img src="https://github.com/v1adisLuvv/AvitoTestApp/blob/master/Images/timeout.png" width="20%">
 </p>
 
 В случае отсутствия соединения на экране будет написано "Нет подключения к интенету".
 
-<img src="https://github.com/v1adisLuvv/AvitoTestApp/blob/master/noConnection.png"  width="20%">
+<img src="https://github.com/v1adisLuvv/AvitoTestApp/blob/master/Images/noConnection.png"  width="20%">
 
 В других случаях на экране будет написано "Ошибка". В случае ошибки загрузки картинок они просто не покажутся, а ошибка будет напечатана в консоль.
 
