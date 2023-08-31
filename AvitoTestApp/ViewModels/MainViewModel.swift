@@ -34,9 +34,12 @@ import Combine
 //                try await Task.sleep(for: .seconds(3))
                 screenState = .content
                 print("finish fetching ads")
+            } catch NetworkError.noInternetConnection {
+                screenState = .error(message: "Нет подключения к интернету")
+            } catch NetworkError.timeout {
+                screenState = .error(message: "Timeout")
             } catch {
-                screenState = .error(message: "Failed loading data")
-                print("bad ads")
+                screenState = .error(message: "Ошибка")
             }
         }
     }

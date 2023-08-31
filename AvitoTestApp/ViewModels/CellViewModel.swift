@@ -28,9 +28,12 @@ import Combine
         Task {
             do {
                 imageData = try await networkManager.getImage(from: url)
+            } catch NetworkError.timeout {
+                print("timeout")
+            } catch NetworkError.noInternetConnection {
+                print("no connection")
             } catch {
-                print(error)
-                print("bad cell image")
+                print("another error")
             }
         }
     }

@@ -25,42 +25,34 @@ final class DefaultNetworkManager: NetworkManager {
     
     // MARK: - NetworkManager methods
     func getAdvertisements() async throws -> [Advertisement] {
-        let (data, response) = try await router.request(AdvertisementsEndpoint.main)
-        if let error = handleResponse(response) {
-            throw error
-        }
-        if let ads: Advertisements = decodeResponse(data) {
-            return ads.advertisements
-        } else {
-            throw NetworkError.unableToDecode
-        }
+        let data: Advertisements = try await getDecodableData(from: AdvertisementsEndpoint.main)
+        return data.advertisements
     }
     
     func getDetailAdvertisement(id: Int) async throws -> Advertisement {
-        let (data, response) = try await router.request(AdvertisementsEndpoint.detail(id: id))
-        if let error = handleResponse(response) {
-            throw error
-        }
-        if let ad: Advertisement = decodeResponse(data) {
-            return ad
-        } else {
-            throw NetworkError.unableToDecode
-        }
+        let data: Advertisement = try await getDecodableData(from: AdvertisementsEndpoint.detail(id: id))
+        return data
     }
     
     func getImage(from url: String) async throws -> Data {
         if let imageData = ImageCache.shared.image(forKey: url) {
             return imageData
         }
-        let (data, response) = try await router.loadImage(from: url)
-        if let error = handleResponse(response) {
-            throw error
-        }
+        let data = try await router.loadImage(from: url)
         ImageCache.shared.save(data, forKey: url)
         return data
     }
     
-    // MARK: - Handling response private methods
+    // MARK: - Getting and handling JSON Decodable data private methods
+    private func getDecodableData<T: Decodable, Endpoint: EndpointType>(from route: Endpoint) async throws -> T {
+        let data = try await router.request(route)
+        if let decodedData: T = decodeResponse(data) {
+            return decodedData
+        } else {
+            throw NetworkError.unableToDecode
+        }
+    }
+    
     private func decodeResponse<T: Decodable>(_ data: Data) -> T? {
         do {
             let result = try JSONDecoder().decode(T.self, from: data)
@@ -68,15 +60,5 @@ final class DefaultNetworkManager: NetworkManager {
         } catch {
             return nil
         }
-    }
-    
-    private func handleResponse(_ response: URLResponse) -> NetworkError? {
-        guard let response = response as? HTTPURLResponse else {
-            return .unexpectedResponseType
-        }
-        guard (200..<300).contains(response.statusCode) else {
-            return .badStatusCode
-        }
-        return nil
     }
 }

@@ -12,4 +12,7 @@ enum NetworkError: Error {
     case badStatusCode
     case unableToDecode
     case badImageURL
+    case noInternetConnection
+    case timeout
+    case networkError
 }

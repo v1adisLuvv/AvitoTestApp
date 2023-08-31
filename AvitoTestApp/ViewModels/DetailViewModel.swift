@@ -29,7 +29,6 @@ import Combine
     private func fetchAdvertisement() {
         Task {
             do {
-                print("start fetching detail ad")
                 screenState = .downloading
                 advertisement = try await networkManager.getDetailAdvertisement(id: id)
 //                try await Task.sleep(for: .seconds(3))
@@ -39,10 +38,12 @@ import Combine
                 }
                 loadImage(from: advertisement.imageURL)
                 screenState = .content
-                print("finish fetching detail ad")
+            } catch NetworkError.noInternetConnection {
+                screenState = .error(message: "Нет подключения к интернету")
+            } catch NetworkError.timeout {
+                screenState = .error(message: "Timeout")
             } catch {
-                screenState = .error(message: "Failed loading data")
-                print("bad detail ad")
+                screenState = .error(message: "Ошибка")
             }
         }
     }
@@ -52,8 +53,7 @@ import Combine
             do {
                 imageData = try await networkManager.getImage(from: url)
             } catch {
-                print(error)
-                print("bad detail image")
+                print("unable to fetch detail image")
             }
         }
     }
