@@ -1,25 +1,35 @@
 # Avito Test App
 ## Демонстрация работы
-#### Так приложение работает на главном экране:
-![](https://github.com/v1adisLuvv/AvitoTestApp/blob/master/general.gif)
+### Так приложение работает на главном экране:
 Как только загрузился main json показывается Collection View с серыми заглушками вместо картинок.
 Картинки отображаются по мере загрузки. Для того чтобы картинки отображались в нужных ячейках используется проверка по ID (из-за переспользования ячеек).
 После того как картинка была загружена, она добавляется в кэш, и в следующий раз будет загружена из него.
 
-#### Экран деталей:
-![](https://github.com/v1adisLuvv/AvitoTestApp/blob/master/detail.gif)
+<img src="https://github.com/v1adisLuvv/AvitoTestApp/blob/master/general.gif" width="20%">
+
+### Экран деталей:
 На экране деталей поведение схоже с главным экраном. Сначала показываются надписи, потом отображается картинка по мере загрузки.
 
-#### Состояние загрузки:
-![](https://github.com/v1adisLuvv/AvitoTestApp/blob/master/loading.gif)
+<img src="https://github.com/v1adisLuvv/AvitoTestApp/blob/master/detail.gif" width="20%">
+
+### Состояние загрузки:
 В состоянии загрузки отображается дефолтный activity indicator.
 
-#### Состояние ошибки:
-![](https://github.com/v1adisLuvv/AvitoTestApp/blob/master/timeout.gif) ![](https://github.com/v1adisLuvv/AvitoTestApp/blob/master/timeout.png) 
+<img src="https://github.com/v1adisLuvv/AvitoTestApp/blob/master/loading.gif" width="20%">
+
+### Состояние ошибки:
 В случае плохого соединения после таймаута на экране будет написано "Timeout".
 
-![](https://github.com/v1adisLuvv/AvitoTestApp/blob/master/loading.gif)
+<p float="left">
+    <img src="https://github.com/v1adisLuvv/AvitoTestApp/blob/master/timeout.gif" width="20%">
+    <img src="https://github.com/v1adisLuvv/AvitoTestApp/blob/master/timeout.png" width="20%">
+</p>
+
 В случае отсутствия соединения на экране будет написано "Нет подключения к интенету".
+
+<img src="https://github.com/v1adisLuvv/AvitoTestApp/blob/master/noConnection.png"  width="20%">
+
+В других случаях на экране будет написано "Ошибка". В случае ошибки загрузки картинок они просто не покажутся, а ошибка будет напечатана в консоль.
 
 ## Стeк разработки
 * UIKit + AutoLayout(constraints in code, no Storyboard)
@@ -30,7 +40,7 @@
 * Caching via NSCache
 
 ## Структура приложения
-За сетевый запросы отвечает NetworkRouter (low-level requests):
+За сетевыe запросы отвечает NetworkRouter (low-level requests):
 ```swift
 protocol NetworkRouter {
     func request<Endpoint: EndpointType>(_ route: Endpoint) async throws -> Data
@@ -61,6 +71,7 @@ protocol NetworkManager {
 Для кэширования используется класс ImageCache, который для удобства был сделан синглтоном, так как приложение небольшое.
 
 У каждого экрана и каждой ячейки есть своя вью-модель.
+
 Для отображения состояния экрана используется enum ScreenState:
 ```swift
 enum ScreenState {
